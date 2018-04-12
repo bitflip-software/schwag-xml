@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="sch" elementFormDefault="qualified" xmlns="sch"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="schwag">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="openapi-version"/>
+                <xs:element name="metadata">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title"/>
+                            <xs:element name="api-version"/>
+                            <xs:element ref="description"/>
+                            <xs:element name="host"/>
+                            <xs:element name="basepath"/>
+                            <xs:element name="schemes">
+                                <xs:complexType>
+                                    <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                                        <xs:element name="scheme"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="tags">
+                                <xs:complexType>
+                                    <xs:sequence maxOccurs="unbounded">
+                                        <xs:element name="tag">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="name"/>
+                                                  <xs:element name="description"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="paths">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded" minOccurs="1">
+                            <xs:element name="path">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="route"/>
+                                        <xs:element name="tags">
+                                            <xs:complexType>
+                                                <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="tag"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element ref="summary"/>
+                                        <xs:element name="operationId"/>
+                                        <xs:element ref="description"/>
+                                        <xs:element name="produces"/>
+                                        <xs:element name="parameters">
+                                            <xs:complexType>
+                                                <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="parmeter" type="parameter-ct"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="responses">
+                                            <xs:complexType>
+                                                <xs:sequence maxOccurs="unbounded">
+                                                  <xs:element name="response" type="responses-ct"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="path-metadata--ct">
+        <xs:sequence>
+            <xs:element name="route"/>
+            <xs:element name="tags">
+                <xs:complexType>
+                    <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                        <xs:element ref="tag"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="summary"/>
+            <xs:element ref="description"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="required" type="xs:boolean"/>
+    <xs:element name="description"/>
+    <xs:element name="summary"/>
+    <xs:element name="data-type" type="data-type-st"/>
+    <xs:simpleType name="data-type-st">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="integer-int32"/>
+            <xs:enumeration value="integer-int64"/>
+            <xs:enumeration value="number-float"/>
+            <xs:enumeration value="number-double"/>
+            <xs:enumeration value="string"/>
+            <xs:enumeration value="string-byte"/>
+            <xs:enumeration value="string-binary"/>
+            <xs:enumeration value="boolean"/>
+            <xs:enumeration value="string-date"/>
+            <xs:enumeration value="string-date-time"/>
+            <xs:enumeration value="string-password"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="schema-ref-st">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:element name="schema-ref" type="schema-ref-st"/>
+    <xs:complexType name="parameter-ct">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element ref="data-type"/>
+                <xs:element ref="schema-ref"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:group name="parameter-commonn-grp">
+        <xs:sequence>
+            <xs:element name="name"/>
+            <xs:element name="input-type"/>
+            <xs:element name="summary"/>
+            <xs:element ref="required"/>
+        </xs:sequence>
+    </xs:group>
+    <xs:complexType name="responses-ct"/>
+    <xs:element name="tag">
+        <xs:simpleType>
+            <xs:restriction base="xs:token">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="12"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:complexType name="scalar-parameter">
+        <xs:sequence>
+            <xs:group ref="parameter-commonn-grp"/>
+            <xs:element ref="simple-value"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="object-parameter">
+        <xs:sequence>
+            <xs:group ref="parameter-commonn-grp"/>
+            <xs:element ref="schema-ref"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="newComplexType2"/>
+    <xs:element name="simple-value" type="data-type-st"/>
+</xs:schema>

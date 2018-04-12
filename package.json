@@ -1,0 +1,19 @@
+{
+  "name": "schwag-xml",
+  "version": "0.0.1",
+  "description": "Specify API in Xml -> Codegen and Swaggergen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Swagger",
+    "OpenAPI",
+    "Xml",
+    "Code",
+    "Generation",
+    "Typescript"
+  ],
+  "author": "Matthew James Briggs",
+  "license": "MIT"
+}
